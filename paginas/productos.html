@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - MedHub</title>
+    <base href="../"> <!-- Corrige las rutas relativas -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+    <!-- Se carga el header dinámicamente -->
+    <div id="header"></div>
+
+    <section class="productos-form">
+        <h2>Personaliza tu Kit Médico</h2>
+        <form id="kit-form">
+            <label for="kit">Selecciona un tipo de kit:</label>
+            <select id="kit" name="kit">
+                <option value="basico">Kit Básico</option>
+                <option value="avanzado">Kit Avanzado</option>
+                <option value="pediatrico">Kit Pediátrico</option>
+                <option value="movilidad">Kit de Movilidad</option>
+            </select>
+
+            <h3>Productos</h3>
+            <div id="productos-list"></div>
+
+            <button type="submit">Guardar Kit</button>
+        </form>
+    </section>
+
+    <!-- Se carga el footer dinámicamente -->
+    <div id="footer"></div>
+
+    <script>
+        // Función para cargar una vista (header o footer)
+        function cargarVista(idElemento, url) {
+            fetch(url)
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById(idElemento).innerHTML = data;
+                })
+                .catch(error => console.error(`Error cargando ${url}:`, error));
+        }
+
+        // Cargar header y footer correctamente
+        cargarVista("header", "paginas/header.html");
+        cargarVista("footer", "paginas/footer.html");
+
+        // Lista de productos para cada kit
+        const productos = {
+            basico: [
+                { nombre: "Gasas estériles", precio: 50 },
+                { nombre: "Alcohol", precio: 30 },
+                { nombre: "Vendas", precio: 40 }
+            ],
+            avanzado: [
+                { nombre: "Sutura", precio: 150 },
+                { nombre: "Guantes quirúrgicos", precio: 80 },
+                { nombre: "Antiséptico", precio: 90 }
+            ],
+            pediatrico: [
+                { nombre: "Jarabe para fiebre", precio: 70 },
+                { nombre: "Curitas infantiles", precio: 25 },
+                { nombre: "Termómetro digital", precio: 100 }
+            ],
+            movilidad: [
+                { nombre: "Bastón ortopédico", precio: 250 },
+                { nombre: "Rodillera ajustable", precio: 180 },
+                { nombre: "Muletas", precio: 400 }
+            ]
+        };
+
+        const kitSelect = document.getElementById("kit");
+        const productosList = document.getElementById("productos-list");
+
+        function actualizarProductos() {
+            productosList.innerHTML = "";
+            const kitSeleccionado = kitSelect.value;
+
+            productos[kitSeleccionado].forEach((producto, index) => {
+                const div = document.createElement("div");
+                div.classList.add("producto-item");
+                div.innerHTML = `
+                    <span>${producto.nombre} - $${producto.precio}</span>
+                    <button type="button" onclick="this.parentElement.remove()">❌</button>
+                `;
+                productosList.appendChild(div);
+            });
+        }
+
+        kitSelect.addEventListener("change", actualizarProductos);
+        actualizarProductos();
+    </script>
+
+</body>
+</html>
