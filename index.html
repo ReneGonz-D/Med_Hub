@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedHub</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <div id="header"></div> <!-- Aquí se cargará el header -->
+    <div id="header"></div> 
 
-    <div id="contenido"></div> <!-- Aquí se cargará el contenido -->
+    <div id="contenido"></div> 
 
-    <div id="footer"></div> <!-- Aquí se cargará el footer -->
+    <div id="footer"></div> 
 
     <script>
-        // Cargar header, contenido y footer en la página
+     
         fetch('paginas/header.html')
             .then(res => res.text())
             .then(data => document.getElementById("header").innerHTML = data);
 
-        fetch('paginas/contenido.html')  // 🔹 Aquí agregamos la vista de contenido
+        fetch('paginas/contenido.html')  // 🔹 
             .then(res => res.text())
             .then(data => document.getElementById("contenido").innerHTML = data);
 
